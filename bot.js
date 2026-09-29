@@ -3,7 +3,7 @@ import express from "express";
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const ROBLOX_KEY = process.env.ROBLOX_MSG_KEY;
-const UNIVERSE_ID = "10320327323";
+const UNIVERSE_ID = "5099257584";
 const TOPIC = "DiscordAdmin";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
