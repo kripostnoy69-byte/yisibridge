@@ -3,7 +3,7 @@ import express from "express";
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const ROBLOX_KEY = process.env.ROBLOX_MSG_KEY; // новый ключ только с universe-messaging:publish
-const UNIVERSE_ID = "ТВОЙ_UNIVERSE_ID";
+const UNIVERSE_ID = "10320327323";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
