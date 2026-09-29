@@ -4,6 +4,7 @@ import express from "express";
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const ROBLOX_KEY = process.env.ROBLOX_MSG_KEY;
 const UNIVERSE_ID = "10320327323";
+const TOPIC = "DiscordAdmin";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
@@ -16,10 +17,10 @@ client.on("messageCreate", async (m) => {
   const adonisCmd = ":" + m.content.slice(1);
   console.log(`Discord: ${m.content} -> ${adonisCmd}`);
   try {
-    const r = await fetch(`https://apis.roblox.com/cloud/v2/universes/${UNIVERSE_ID}/topics/DiscordAdmin:publish`, {
+    const r = await fetch(`https://apis.roblox.com/cloud/v2/universes/${UNIVERSE_ID}:publishMessage`, {
       method: "POST",
       headers: { "x-api-key": ROBLOX_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({ message: JSON.stringify({ cmd: adonisCmd }) })
+      body: JSON.stringify({ topic: TOPIC, message: JSON.stringify({ cmd: adonisCmd }) })
     });
     const t = await r.text();
     console.log(`Roblox ответ: ${r.status} ${t}`);
