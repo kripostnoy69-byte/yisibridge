@@ -14,6 +14,36 @@ client.once("ready", () => {
 
 client.on("messageCreate", async (m) => {
   if (m.author.bot || !m.content.startsWith("!")) return;
+
+  if (m.content === "!online") {
+    try {
+      const r = await fetch(`https://games.roblox.com/v1/games/${UNIVERSE_ID}/servers/Public?limit=100`);
+      const j = await r.json();
+      let ids = [];
+      let total = 0;
+      for (const s of (j.data || [])) {
+        total += s.playing || 0;
+        ids.push(...(s.playerIds || []));
+      }
+      ids = ids.slice(0, 100);
+      let names = [];
+      if (ids.length) {
+        const u = await fetch("https://users.roblox.com/v1/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userIds: ids, excludeBannedUsers: false })
+        });
+        const uj = await u.json();
+        names = (uj.data || []).map(x => x.displayName && x.displayName !== x.name ? `${x.displayName} (@${x.name})` : `@${x.name}`);
+      }
+      m.reply(`Онлайн: ${total}\n` + (names.join(", ") || "пусто"));
+    } catch (e) {
+      console.log("online error:", e.message);
+      m.reply("Не смог получить онлайн: " + e.message);
+    }
+    return;
+  }
+
   const adonisCmd = ":" + m.content.slice(1);
   console.log(`Discord: ${m.content} -> ${adonisCmd}`);
   try {
