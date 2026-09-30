@@ -4,6 +4,7 @@ import express from "express";
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const ROBLOX_KEY = process.env.ROBLOX_MSG_KEY;
 const UNIVERSE_ID = "5099257584";
+const PLACE_ID = "14795867837";
 const TOPIC = "DiscordAdmin";
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
@@ -17,7 +18,7 @@ client.on("messageCreate", async (m) => {
 
   if (m.content === "!online") {
     try {
-      const r = await fetch(`https://games.roblox.com/v1/games/${UNIVERSE_ID}/servers/Public?limit=100`);
+      const r = await fetch(`https://games.roblox.com/v1/games/${PLACE_ID}/servers/Public?limit=100`);
       const j = await r.json();
       let ids = [];
       let total = 0;
